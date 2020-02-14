@@ -1,18 +1,37 @@
 <template>
   <div class="single-post-page">
     <section class="post">
-      <h1 class="post-title">Title</h1>
+      <h1 class="post-title">{{ loadedPost.title }}</h1>
       <div class="post-details">
-        <div>Last updated on XXX</div>
-        <div>Written by NAME</div>
+        <div>Last updated on {{ loadedPost.updatedDate }}</div>
+        <div>Written by {{ loadedPost.author }}</div>
       </div>
-      <p>Content of the post</p>
+      <p>{{ loadedPost.content }}</p>
     </section>
     <section class="post-feedback">
       <p>Let me know your comments</p>
     </section>
   </div>
 </template>
+
+<script>
+import axios from 'axios'
+
+export default {
+  name: 'SinglePost',
+  asyncData(context) {
+    return axios.get(`https://nuxt-blog-b5559.firebaseio.com/posts/${context.params.id}.json`)
+      .then(res => {
+        console.log(res.data)
+        return {
+          loadedPost: res.data
+        }
+      })
+      .catch(e => context.error(e))
+
+  }
+}
+</script>
 
 <style scoped>
 .single-post-page {

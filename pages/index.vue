@@ -3,12 +3,7 @@
     <section class="intro">
       <h1>Get te latest tech news</h1>
     </section>
-      <PostList
-        id="1"
-        thumbnail="https://lock0.files.wordpress.com/2010/03/genialo.png"
-        title="Hola Mundo"
-        previewText="Descripción de Hola Mundo"
-      />
+      <PostList :posts="loadedPost" />
   </div>
 </template>
 
@@ -18,6 +13,11 @@ import PostList from '~/components/Posts/PostList'
 export default {
   components: {
     PostList
+  },
+  computed: {
+    loadedPost() {
+      return this.$store.getters.getPosts
+    }
   }
 }
 </script>
